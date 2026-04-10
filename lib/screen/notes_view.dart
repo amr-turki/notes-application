@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_application/widget/custom_appbar.dart';
+import 'package:notes_application/widget/modal_sheet.dart';
 import 'package:notes_application/widget/note_item.dart';
 
 class NotesScreen extends StatelessWidget {
@@ -9,6 +10,21 @@ class NotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+
+            context: context,
+            builder: (context) {
+              return ModalSheet();
+            },
+          );
+        },
+        child: Icon(Icons.add, size: 18),
+      ),
       body: Padding(
         padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
         child: Column(
