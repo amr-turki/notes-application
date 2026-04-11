@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:notes_application/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_application/model/note_model.dart';
 import 'package:notes_application/widget/custom_button.dart';
 import 'package:notes_application/widget/custom_textfield.dart';
 
@@ -68,6 +69,15 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     text: 'Save',
                     onTap: () {
                       if (globalKey.currentState!.validate()) {
+                        var noteModel = NoteModel(
+                          color: Colors.blue.value,
+                          date: DateTime.now().toString(),
+                          subtitle: subtitle!,
+                          title: tilte!,
+                        );
+                        BlocProvider.of<AddNoteCubit>(
+                          context,
+                        ).addNote(noteModel);
                         globalKey.currentState!.save();
                       } else {
                         autovalidatemode = AutovalidateMode.always;
