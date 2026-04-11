@@ -33,16 +33,16 @@ class _AddNoteFormState extends State<AddNoteForm> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: BlocConsumer<AddNoteCubit, AddNoteState>(
-        listener: (context, state) {
-          if (state is AddNoteLoading) {
-            isLoading = true;
-          }
-        },
-        builder: (context, state) {
-          return ModalProgressHUD(
-            inAsyncCall: isLoading,
+    return BlocConsumer<AddNoteCubit, AddNoteState>(
+      listener: (context, state) {
+        if (state is AddNoteLoading) {
+          isLoading = true;
+        }
+      },
+      builder: (context, state) {
+        return ModalProgressHUD(
+          inAsyncCall: isLoading,
+          child: SingleChildScrollView(
             child: Form(
               key: globalKey,
               child: Column(
@@ -78,9 +78,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

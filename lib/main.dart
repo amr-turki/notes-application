@@ -10,8 +10,9 @@ import 'package:notes_application/widget/modal_sheet.dart';
 
 void main() async {
   await Hive.initFlutter();
+  Hive.registerAdapter<NoteModel>(NoteModelAdapter());
   await Hive.openBox(KnotesBox);
-  Hive.registerAdapter(NoteModelAdapter());
+
   runApp(const NotesApp());
 }
 
