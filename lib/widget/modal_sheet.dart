@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:notes_application/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_application/widget/custom_button.dart';
 import 'package:notes_application/widget/custom_textfield.dart';
 
@@ -27,41 +30,56 @@ class _AddNoteFormState extends State<AddNoteForm> {
   AutovalidateMode autovalidatemode = AutovalidateMode.disabled;
   String? tilte, subtitle;
 
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: globalKey,
-      child: Column(
-        children: [
-          SizedBox(height: 25),
-          CustomTextField(
-            text: 'topic',
-            maxlines: 1,
-            onSaved: (value) {
-              tilte = value;
-            },
-          ),
-          SizedBox(height: 25),
-          CustomTextField(
-            text: 'content',
-            maxlines: 4,
-            onSaved: (value) {
-              tilte = value;
-            },
-          ),
-          SizedBox(height: 65),
-          CustomButton(
-            text: 'Save',
-            onTap: () {
-              if (globalKey.currentState!.validate()) {
-                globalKey.currentState!.save();
-              } else {
-                autovalidatemode = AutovalidateMode.always;
-                setState(() {});
-              }
-            },
-          ),
-        ],
+    return SingleChildScrollView(
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        listener: (context, state) {
+          if (state is AddNoteLoading) {
+            isLoading = true;
+          }
+        },
+        builder: (context, state) {
+          return ModalProgressHUD(
+            inAsyncCall: isLoading,
+            child: Form(
+              key: globalKey,
+              child: Column(
+                children: [
+                  SizedBox(height: 25),
+                  CustomTextField(
+                    text: 'topic',
+                    maxlines: 1,
+                    onSaved: (value) {
+                      tilte = value;
+                    },
+                  ),
+                  SizedBox(height: 25),
+                  CustomTextField(
+                    text: 'content',
+                    maxlines: 4,
+                    onSaved: (value) {
+                      tilte = value;
+                    },
+                  ),
+                  SizedBox(height: 65),
+                  CustomButton(
+                    text: 'Save',
+                    onTap: () {
+                      if (globalKey.currentState!.validate()) {
+                        globalKey.currentState!.save();
+                      } else {
+                        autovalidatemode = AutovalidateMode.always;
+                        setState(() {});
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
