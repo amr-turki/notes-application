@@ -34,63 +34,66 @@ class _AddNoteFormState extends State<AddNoteForm> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddNoteCubit, AddNoteState>(
-      listener: (context, state) {
-        if (state is AddNoteLoading) {
-          isLoading = true;
-        }
-      },
-      builder: (context, state) {
-        return ModalProgressHUD(
-          inAsyncCall: isLoading,
-          child: SingleChildScrollView(
-            child: Form(
-              key: globalKey,
-              child: Column(
-                children: [
-                  SizedBox(height: 25),
-                  CustomTextField(
-                    text: 'topic',
-                    maxlines: 1,
-                    onSaved: (value) {
-                      tilte = value;
-                    },
-                  ),
-                  SizedBox(height: 25),
-                  CustomTextField(
-                    text: 'content',
-                    maxlines: 4,
-                    onSaved: (value) {
-                      tilte = value;
-                    },
-                  ),
-                  SizedBox(height: 65),
-                  CustomButton(
-                    text: 'Save',
-                    onTap: () {
-                      if (globalKey.currentState!.validate()) {
-                        var noteModel = NoteModel(
-                          color: Colors.blue.value,
-                          date: DateTime.now().toString(),
-                          subtitle: subtitle!,
-                          title: tilte!,
-                        );
-                        BlocProvider.of<AddNoteCubit>(
-                          context,
-                        ).addNote(noteModel);
-                        globalKey.currentState!.save();
-                      } else {
-                        autovalidatemode = AutovalidateMode.always;
-                        setState(() {});
-                      }
-                    },
-                  ),
-                ],
+    return BlocProvider(
+      create: (context) => AddNoteCubit(),
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        listener: (context, state) {
+          if (state is AddNoteLoading) {
+            isLoading = true;
+          }
+        },
+        builder: (context, state) {
+          return ModalProgressHUD(
+            inAsyncCall: isLoading,
+            child: SingleChildScrollView(
+              child: Form(
+                key: globalKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 25),
+                    CustomTextField(
+                      text: 'topic',
+                      maxlines: 1,
+                      onSaved: (value) {
+                        tilte = value;
+                      },
+                    ),
+                    SizedBox(height: 25),
+                    CustomTextField(
+                      text: 'content',
+                      maxlines: 4,
+                      onSaved: (value) {
+                        tilte = value;
+                      },
+                    ),
+                    SizedBox(height: 65),
+                    CustomButton(
+                      text: 'Save',
+                      onTap: () {
+                        if (globalKey.currentState!.validate()) {
+                          var noteModel = NoteModel(
+                            color: Colors.blue.value,
+                            date: DateTime.now().toString(),
+                            subtitle: subtitle!,
+                            title: tilte!,
+                          );
+                          BlocProvider.of<AddNoteCubit>(
+                            context,
+                          ).addNote(noteModel);
+                          globalKey.currentState!.save();
+                        } else {
+                          autovalidatemode = AutovalidateMode.always;
+                          setState(() {});
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
