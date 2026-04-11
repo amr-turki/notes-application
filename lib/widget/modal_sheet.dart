@@ -50,7 +50,17 @@ class _AddNoteFormState extends State<AddNoteForm> {
             },
           ),
           SizedBox(height: 65),
-          CustomButton(text: 'Save'),
+          CustomButton(
+            text: 'Save',
+            onTap: () {
+              if (globalKey.currentState!.validate()) {
+                globalKey.currentState!.save();
+              } else {
+                autovalidatemode = AutovalidateMode.always;
+                setState(() {});
+              }
+            },
+          ),
         ],
       ),
     );
