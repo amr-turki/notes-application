@@ -25,12 +25,12 @@ class SimpleBlocProdivedr implements BlocObserver
   
   @override
   void onClose(BlocBase<dynamic> bloc) {
-    // TODO: implement onClose
+    debugPrint('change =$bloc');
   }
   
   @override
   void onCreate(BlocBase<dynamic> bloc) {
-    // TODO: implement onCreate
+    debugPrint('change =$bloc');
   }
   
   @override
