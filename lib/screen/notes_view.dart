@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_application/widget/custom_appbar.dart';
 import 'package:notes_application/widget/modal_sheet.dart';
 import 'package:notes_application/widget/note_item.dart';
@@ -13,6 +14,7 @@ class NotesScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
+            isScrollControlled: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
             ),
@@ -25,23 +27,25 @@ class NotesScreen extends StatelessWidget {
         },
         child: Icon(Icons.add, size: 18),
       ),
-      body: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            SizedBox(height: 25),
-            CustomAppbar(text: 'Notes', icon: Icons.search),
+      body: BlocBuilder(
+        builder: (context, state) => Padding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              SizedBox(height: 25),
+              CustomAppbar(text: 'Notes', icon: Icons.search),
 
-            SizedBox(height: 34),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: NoteItem(),
+              SizedBox(height: 34),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: NoteItem(),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:notes_application/widget/modal_sheet.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<NoteModel>(NoteModelAdapter());
+
   await Hive.openBox(KnotesBox);
 
   runApp(const NotesApp());
@@ -27,7 +28,7 @@ class NotesApp extends StatelessWidget {
         ModalSheet.id: (context) => ModalSheet(),
         EditNotesView.id: (context) => EditNotesView(),
       },
-    
+
       debugShowCheckedModeBanner: false,
       home: Scaffold(),
     );
