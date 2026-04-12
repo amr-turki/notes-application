@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:notes_application/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_application/cubits/note_cubit/notes_cubit.dart';
 import 'package:notes_application/model/note_model.dart';
 import 'package:notes_application/widget/custom_button.dart';
 import 'package:notes_application/widget/custom_textfield.dart';
@@ -41,6 +42,10 @@ class _AddNoteFormState extends State<AddNoteForm> {
         listener: (context, state) {
           if (state is AddNoteLoading) {
             isLoading = true;
+          }
+          if (state is NoteSuccess) {
+            BlocProvider.of<NoteCubit>(context).fetchAllNotes();
+            Navigator.pop(context);
           }
         },
         builder: (context, state) {

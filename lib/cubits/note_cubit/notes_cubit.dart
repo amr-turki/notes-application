@@ -10,9 +10,10 @@ class NoteCubit extends Cubit<NoteState> {
   NoteCubit() : super(NoteInitial());
 
   List<NoteModel>? models;
-  addNote(NoteModel note) {
+  fetchAllNotes() {
     var notesBox = Hive.box<NoteModel>(KnotesBox);
 
     models = notesBox.values.toList();
+    emit(NoteSuccess(models!));
   }
 }
