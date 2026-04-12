@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:notes_application/model/note_model.dart';
 import 'package:notes_application/screen/edit_notes_view.dart';
 
 class NoteItem extends StatelessWidget {
-  const NoteItem({super.key});
+  const NoteItem({super.key, required this.model});
 
+  final NoteModel model;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,12 +26,12 @@ class NoteItem extends StatelessWidget {
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Text(
-                    'Flutter tips',
+                    model.title,
                     style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ),
                 subtitle: Text(
-                  'Build your Career with Me Build your Career with Me Build your Career with Me',
+                  model.subtitle,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white.withOpacity(0.6),
@@ -44,7 +46,7 @@ class NoteItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
                 child: Text(
-                  '15 May 2026',
+                  model.date,
                   style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ),
