@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: text,
 
-        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         border: borderBuilder(),
         enabledBorder: borderBuilder(),
         focusedBorder: borderBuilder(),

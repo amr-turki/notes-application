@@ -16,4 +16,15 @@ class NoteCubit extends Cubit<NoteState> {
     models = notesBox.values.toList();
     emit(NoteSuccess());
   }
+  void searchNotes({required String query}) {
+  var notesBox = Hive.box<NoteModel>(KnotesBox);
+  
+  // بنجيب كل النوتس ونعمل فلتر بناءً على العنوان (Title)
+  models = notesBox.values.where((note) {
+    return note.title.toLowerCase().contains(query.toLowerCase());
+  }).toList();
+
+  // بنحدث الواجهة بالحالات الجديدة
+  emit(NoteSuccess());
+}
 }

@@ -15,6 +15,7 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
+  bool isSearching = false;
   @override
   void initState() {
     BlocProvider.of<NoteCubit>(
@@ -44,15 +45,49 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 25),
+          SizedBox(height: 35),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: CustomAppbar(text: 'Notes', icon: Icons.search),
+            child: isSearching ? buildSearchField() : buildDefaultAppBar(),
           ),
-
-          SizedBox(height: 34),
+          SizedBox(height: 35),
           Expanded(child: NotesBuilder()),
         ],
+      ),
+    );
+  }
+
+  Widget buildDefaultAppBar() {
+    return CustomAppbar(
+      onPressed: () {
+        setState(() {
+          isSearching = true;
+        });
+      },
+      text: 'Notes',
+      icon: Icons.search,
+    );
+  }
+
+  Widget buildSearchField() {
+    return TextField(
+      autofocus: true,
+      onChanged: (value) {
+        BlocProvider.of<NoteCubit>(context).searchNotes(query: value);
+      },
+      decoration: InputDecoration(
+        hintText: 'Search for a note...',
+        prefixIcon: const Icon(Icons.search),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            setState(() {
+              isSearching = false;
+              BlocProvider.of<NoteCubit>(context).fetchAllNotes();
+            });
+          },
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
       ),
     );
   }

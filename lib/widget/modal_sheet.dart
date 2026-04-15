@@ -61,7 +61,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     children: [
                       SizedBox(height: 25),
                       CustomTextField(
-                        text: 'topic',
+                        text: 'Topic',
                         maxlines: 1,
                         onSaved: (value) {
                           tilte = value;
@@ -69,7 +69,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                       ),
                       SizedBox(height: 25),
                       CustomTextField(
-                        text: 'content',
+                        text: 'Content',
                         maxlines: 4,
                         onSaved: (value) {
                           subtitle = value;
@@ -77,6 +77,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
                       ),
                       SizedBox(height: 35),
                       ColorBuilder(),
+                      SizedBox(height: 25),
+
                       CustomButton(
                         isLoading: state is AddNoteLoading ? true : false,
                         text: 'Save',
@@ -102,6 +104,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                           }
                         },
                       ),
+                      SizedBox(height: 35),
                     ],
                   ),
                 ),

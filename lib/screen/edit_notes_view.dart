@@ -53,8 +53,9 @@ class _EditNotesViewState extends State<EditNotesView> {
               },
 
               text: widget.model.subtitle,
-              maxlines: 2,
+              maxlines: 5,
             ),
+            SizedBox(height: 34),
             EditColorList(model: widget.model),
           ],
         ),
