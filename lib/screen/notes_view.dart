@@ -5,11 +5,26 @@ import 'package:notes_application/model/note_model.dart';
 import 'package:notes_application/widget/custom_appbar.dart';
 import 'package:notes_application/widget/modal_sheet.dart';
 import 'package:notes_application/widget/note_item.dart';
+import 'package:notes_application/widget/notes_builder.dart';
 
-class NotesScreen extends StatelessWidget {
+class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
 
   static String id = "NotesView";
+
+  @override
+  State<NotesScreen> createState() => _NotesScreenState();
+}
+
+class _NotesScreenState extends State<NotesScreen> {
+  @override
+  void initState() {
+    BlocProvider.of<NoteCubit>(
+      context,
+    ).fetchAllNotes(); // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,33 +44,17 @@ class NotesScreen extends StatelessWidget {
         },
         child: Icon(Icons.add, size: 18),
       ),
-      body: BlocBuilder(
-        builder: (context, state) {
-          List<NoteModel> models =
-              BlocProvider.of<NoteCubit>(context).models ?? [];
+      body: Column(
+        children: [
+          SizedBox(height: 25),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomAppbar(text: 'Notes', icon: Icons.search),
+          ),
 
-          return Padding(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                SizedBox(height: 25),
-                CustomAppbar(text: 'Notes', icon: Icons.search),
-
-                SizedBox(height: 34),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: state is NoteSuccess ? state.models.length : 0,
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: NoteItem(model: models[index]),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
+          SizedBox(height: 34),
+          Expanded(child: NotesBuilder()),
+        ],
       ),
     );
   }

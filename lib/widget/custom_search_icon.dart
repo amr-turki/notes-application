@@ -17,7 +17,7 @@ class CustomSearchIcon extends StatelessWidget {
         onPressed: () {
           if (icon == Icons.close) Navigator.pop(context);
         },
-        icon: Icon(icon, size: 18),
+        icon: Icon(icon, size: 33),
       ),
     );
   }
