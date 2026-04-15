@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:notes_application/constants.dart';
 import 'package:notes_application/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_application/cubits/note_cubit/notes_cubit.dart';
 import 'package:notes_application/model/note_model.dart';
@@ -74,7 +75,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
                           subtitle = value;
                         },
                       ),
-                      SizedBox(height: 65),
+                      SizedBox(height: 35),
+                      ColorBuilder(),
                       CustomButton(
                         isLoading: state is AddNoteLoading ? true : false,
                         text: 'Save',
@@ -107,6 +109,59 @@ class _AddNoteFormState extends State<AddNoteForm> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class ColorItem extends StatelessWidget {
+  const ColorItem({super.key, required this.active, required this.color});
+
+  final Color color;
+  final bool active;
+  @override
+  Widget build(BuildContext context) {
+    return active
+        ? CircleAvatar(
+            backgroundColor: Colors.white,
+            radius: 40,
+            child: CircleAvatar(backgroundColor: color, radius: 35),
+          )
+        : CircleAvatar(backgroundColor: color, radius: 35);
+  }
+}
+
+class ColorBuilder extends StatefulWidget {
+  @override
+  State<ColorBuilder> createState() => _ColorBuilderState();
+}
+
+class _ColorBuilderState extends State<ColorBuilder> {
+  int currentindex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 35 * 2,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+
+        itemCount: Kcolors.length,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+          child: GestureDetector(
+            onTap: () {
+              currentindex = index;
+              BlocProvider.of<AddNoteCubit>(context).color = Kcolors[index];
+
+              setState(() {});
+            },
+            child: ColorItem(
+              color: Kcolors[index],
+              active: currentindex == index,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:notes_application/cubits/note_cubit/notes_cubit.dart';
 import 'package:notes_application/model/note_model.dart';
 import 'package:notes_application/widget/note_item.dart';
 
-
 class NotesBuilder extends StatelessWidget {
   const NotesBuilder({super.key});
 

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_application/cubits/note_cubit/notes_cubit.dart';
-import 'package:notes_application/model/note_model.dart';
 import 'package:notes_application/widget/custom_appbar.dart';
 import 'package:notes_application/widget/modal_sheet.dart';
-import 'package:notes_application/widget/note_item.dart';
 import 'package:notes_application/widget/notes_builder.dart';
 
 class NotesScreen extends StatefulWidget {
