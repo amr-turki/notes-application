@@ -18,6 +18,25 @@ class EditNotesView extends StatefulWidget {
 
 class _EditNotesViewState extends State<EditNotesView> {
   String? title, subtitle;
+  late TextEditingController titleController;
+  late TextEditingController subtitleController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    titleController = TextEditingController(text: widget.model.title);
+    subtitleController = TextEditingController(text: widget.model.subtitle);
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    subtitleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +44,7 @@ class _EditNotesViewState extends State<EditNotesView> {
         padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
         child: Column(
           children: [
-            SizedBox(height: 25),
+            SizedBox(height: 45),
             CustomAppbar(
               onPressed: () {
                 widget.model.title = title ?? widget.model.title;
@@ -40,6 +59,7 @@ class _EditNotesViewState extends State<EditNotesView> {
             ),
             SizedBox(height: 34),
             CustomTextField(
+              controller: titleController,
               onChanged: (value) {
                 title = value;
               },
@@ -48,6 +68,7 @@ class _EditNotesViewState extends State<EditNotesView> {
             ),
             SizedBox(height: 24),
             CustomTextField(
+              controller: subtitleController,
               onChanged: (value) {
                 subtitle = value;
               },

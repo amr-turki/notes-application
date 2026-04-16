@@ -45,7 +45,7 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 35),
+          SizedBox(height: 45),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: isSearching ? buildSearchField() : buildDefaultAppBar(),
